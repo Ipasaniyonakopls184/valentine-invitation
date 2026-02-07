@@ -123,27 +123,35 @@ function moveNo() {
     }
 }
 
-// Function to create floating hearts
+// Heart confetti effect
 function createHeart() {
     const heart = document.createElement('div');
     heart.textContent = '💖';
     heart.style.position = 'fixed';
     heart.style.left = Math.random() * window.innerWidth + 'px';
-    heart.style.top = window.innerHeight + 'px';
+    heart.style.top = -50 + 'px'; // start above the screen
     heart.style.fontSize = Math.random() * 30 + 20 + 'px';
     heart.style.pointerEvents = 'none';
     heart.style.zIndex = 9999;
-    heart.style.transition = 'transform 4s linear, opacity 4s linear';
+    heart.style.opacity = 1;
     document.body.appendChild(heart);
 
-    // Animate upward
-    setTimeout(() => {
-        heart.style.transform = `translateY(-${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`;
-        heart.style.opacity = 0;
-    }, 10);
+    // Random drift and speed
+    const endX = parseFloat(heart.style.left) + (Math.random() * 200 - 100); // drift left/right
+    const endY = window.innerHeight + 100; // move past bottom
+    const duration = Math.random() * 3000 + 3000; // 3–6 seconds
 
-    // Remove after animation
-    setTimeout(() => heart.remove(), 4000);
+    heart.animate([
+        { transform: `translate(0px, 0px) rotate(0deg)`, opacity: 1 },
+        { transform: `translate(${endX - parseFloat(heart.style.left)}px, ${endY}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+    ], {
+        duration: duration,
+        easing: 'linear',
+        iterations: 1,
+    });
+
+    // Remove heart after animation
+    setTimeout(() => heart.remove(), duration);
 }
 
 function yesClicked() {
@@ -164,10 +172,8 @@ function yesClicked() {
         YAY! 💘 Happy Valentine’s Day! 💘
     </div>`;
 
-    // Generate hearts continuously
-    const heartInterval = setInterval(createHeart, 300); // new heart every 0.3s
-
-    // Stop generating after 10 seconds
+    // Generate continuous hearts for 10 seconds
+    const heartInterval = setInterval(createHeart, 150); // more frequent for full effect
     setTimeout(() => clearInterval(heartInterval), 10000);
 }
 </script>
