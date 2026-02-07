@@ -1,79 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Valentine?</title>
-<style>
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #ffe6e6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-h1 {
-    background: rgba(255, 255, 255, 0.85);
-    padding: 20px 40px;
-    border-radius: 20px;
-    font-size: 2rem;
-    text-align: center;
-}
-
-#gif {
-    width: 250px;
-    height: 250px;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-button {
-    padding: 15px 30px;
-    font-size: 1.5rem;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s ease;
-}
-
-#yesBtn {
-    background-color: #ff4d6d;
-    color: white;
-}
-
-#noBtn {
-    background-color: #555;
-    color: white;
-}
-</style>
-</head>
-<body>
-
-<div class="wrapper">
-    <h1>Will you be my Valentine? 💖</h1>
-    <img id="gif" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Valentine GIF">
-    <div class="button-container">
-        <button id="yesBtn" onclick="yesClicked()">YES 💕</button>
-        <button id="noBtn" onclick="moveNo()">NO 😅</button>
-    </div>
-</div>
-
-<script>
 let yesScale = 1;
 let noClickCount = 0;
 
@@ -103,12 +27,18 @@ function moveNo() {
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
 
-    // Update NO button text
-    if (noClickCount < noMessages.length) {
-        noBtn.textContent = noMessages[noClickCount];
-        noClickCount++;
-    }
+    // Cycle NO button text
+    noBtn.textContent = noMessages[noClickCount % noMessages.length];
+    noClickCount++;
 
     // Scale YES button gradually
     yesScale += 0.3;
-    yesBtn.style.transform = `sca
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    // Full screen YES message
+    if (yesScale > 6) {
+        yesBtn.style.left = "0";
+        yesBtn.style.top = "0";
+        yesBtn.style.width = "100vw";
+        yesBtn.style.height = "100vh";
+        yesBtn.style.fontSize
