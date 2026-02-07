@@ -11,21 +11,16 @@ html, body {
     overflow: hidden;
     font-family: Arial, sans-serif;
     background-color: #ffe6e6;
-}
-
-/* Centered GIF */
-#gif {
-    display: block;
-    margin: 100px auto 0 auto; /* top margin and center horizontally */
-    width: 250px;  /* adjust GIF size */
-    height: 250px;
-    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Text box above GIF */
 .container {
     text-align: center;
-    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 h1 {
@@ -36,12 +31,19 @@ h1 {
     font-size: 2rem;
 }
 
+/* Centered GIF */
+#gif {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 20px;
+    z-index: 0;
+}
+
 /* Button container below GIF */
 .button-container {
     display: flex;
-    justify-content: center; /* center horizontally */
-    gap: 20px; /* space between buttons */
-    margin-top: 20px; /* space below GIF */
+    justify-content: center;
+    gap: 20px;
 }
 
 button {
@@ -50,6 +52,8 @@ button {
     border-radius: 12px;
     border: none;
     cursor: pointer;
+    position: relative; /* default relative */
+    transition: all 0.2s ease;
 }
 
 #yesBtn {
@@ -85,16 +89,21 @@ function moveNo() {
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
 
-    const x = Math.random() * (window.innerWidth - 150);
-    const y = Math.random() * (window.innerHeight - 80);
+    // Make NO button absolute for movement
+    noBtn.style.position = "absolute";
 
-    noBtn.style.position = "absolute"; // allow random movement
+    // Calculate random position inside viewport
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
 
+    // Scale YES button
     yesScale += 0.3;
     yesBtn.style.transform = "scale(" + yesScale + ")";
 
+    // Full screen YES message
     if (yesScale > 6) {
         yesBtn.style.left = "0";
         yesBtn.style.top = "0";
@@ -115,6 +124,7 @@ function yesClicked() {
         justify-content:center;
         font-size:3rem;
         background:rgba(255,255,255,0.8);
+        text-align:center;
     ">
         YAY! 💘 Happy Valentine’s Day! 💘
     </div>`;
